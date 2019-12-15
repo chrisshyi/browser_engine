@@ -1,4 +1,4 @@
-#include "node.h"
+#include "../include/browser_engine/node.h"
 
 Node::Node(string data) : children{}, node_type{NodeType::TEXT}, node_data{data}
 {

@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.10)
+set(CMAKE_CXX_COMPILER clang++-9)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -stdlib=libc++")
+
+project(browser_engine VERSION 1.0 DESCRIPTION "A toy browser engine" LANGUAGES CXX) 
+
+add_executable(main src/main.cc include/browser_engine/node.h)
+add_library(node src/node.cc include/browser_engine/node.h include/browser_engine/node.h)
+target_compile_features(main PUBLIC cxx_std_17)
+target_compile_features(node PUBLIC cxx_std_17)
+target_include_directories(main PUBLIC include)
+target_include_directories(node PUBLIC include)
+target_link_libraries(main PUBLIC node)
