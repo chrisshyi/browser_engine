@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include "element_data.h"
 #include <variant>

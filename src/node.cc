@@ -11,7 +11,7 @@ Node::Node(string name, AttrMap attributes, vector<Node> children) : children{ch
 void Node::print_node(string indent, bool last) {
     using std::cout;
     using std::endl;
-
+    
     cout << indent;
     if (last) {
         cout << "\\-";
