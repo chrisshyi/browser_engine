@@ -9,7 +9,6 @@ enum class NodeType {
     ELEMENT
 };
 
-
 class Node {
     private:
         vector<Node> children;        
@@ -18,6 +17,10 @@ class Node {
     public:
         Node(string);
         Node(string, AttrMap, vector<Node>);
+        Node(const Node&&);
+        Node(const Node&);
+        Node& operator=(const Node&&);
+        Node& operator=(const Node&);
         NodeType get_node_type() {
             return node_type;
         };

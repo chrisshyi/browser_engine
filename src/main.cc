@@ -1,4 +1,5 @@
 #include "../include/browser_engine/node.h"
+#include "../include/browser_engine/parser.h"
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -13,4 +14,7 @@ int main() {
     vector<Node> children {child1, child2, child4, child3};
     Node root{"root", AttrMap(), children};
     root.print_node("", true);
+    Parser parser{0, "hello"};
+    cout << parser.next_char() << endl;
+    cout << parser.starts_with("hell") << endl;
 }

@@ -6,8 +6,10 @@ project(browser_engine VERSION 1.0 DESCRIPTION "A toy browser engine" LANGUAGES 
 
 add_executable(main src/main.cc include/browser_engine/node.h)
 add_library(node src/node.cc include/browser_engine/node.h include/browser_engine/node.h)
+add_library(parser src/parser.cc include/browser_engine/parser.h)
 target_compile_features(main PUBLIC cxx_std_17)
 target_compile_features(node PUBLIC cxx_std_17)
 target_include_directories(main PUBLIC include)
 target_include_directories(node PUBLIC include)
 target_link_libraries(main PUBLIC node)
+target_link_libraries(main PUBLIC parser)

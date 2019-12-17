@@ -12,6 +12,7 @@ class ElementData {
     public:
         ElementData(string tag_name, AttrMap attributes):
         tag_name{tag_name}, attributes{attributes} {}
+
         string get_tag_name() {
             return tag_name;
         };
