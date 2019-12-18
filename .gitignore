@@ -5,3 +5,6 @@ build/*
 cmake-build-debug/*
 .idea/*
 debug/*
+.cproject
+.project
+CMakeLists.txt.user
