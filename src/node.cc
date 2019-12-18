@@ -51,7 +51,8 @@ void Node::print_node(string indent, bool last) {
     if (node_type == NodeType::TEXT) {
         cout << std::get<string>(node_data) << endl;
     } else {
-        cout << std::get<ElementData>(node_data).get_tag_name() << endl;
+        auto element_data = std::get<ElementData>(node_data);
+        cout << element_data.get_tag_name() << " " << element_data.get_attr_str() << endl;
     }
     for (int i = 0; i < children.size(); i++) {
         children[i].print_node(indent, i == children.size() - 1);

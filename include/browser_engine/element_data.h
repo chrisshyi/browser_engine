@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <unordered_map>
+#include <sstream>
 using std::string;
 using std::unordered_map;
 using AttrMap = unordered_map<string, string>;
@@ -19,5 +20,13 @@ class ElementData {
         AttrMap get_attr_map() {
             return attributes;
         }
+        string get_attr_str() {
+            std::stringstream ss;
 
+            for (auto& kv : attributes) {
+                ss << kv.first << "=\"" << kv.second << "\" ";
+            }
+            return ss.str();
+        }
 };
+

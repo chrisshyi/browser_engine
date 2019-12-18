@@ -22,6 +22,6 @@ int main() {
     cout << parser.get_pos() << endl;
     */
 
-   	Node root_node = parse("<html> <head> <body> </body> </head> </html>");
+   	Node root_node = parse("<html> <head foo=\"bar\" style=\"color5\"> <body> </body> </head> </html>");
    	root_node.print_node("", true);
 }
