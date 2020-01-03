@@ -1,6 +1,6 @@
 #include "catch.hpp"
 #include <string>
-#include "../include/browser_engine/parser.h"
+#include "../include/browser_engine/html_parser.h"
 #include "../include/browser_engine/node.h"
 
 using std::string;
