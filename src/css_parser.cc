@@ -1,5 +1,6 @@
 #include "../include/browser_engine/css_parser.h"
 #include <optional>
+#include <algorithm>
 
 bool valid_identifier_char(char);
 
@@ -37,4 +38,23 @@ bool valid_identifier_char(char c) {
 std::string CSSParser::parse_identifier() {
 	std::function<bool(char)> func {valid_identifier_char};
 	return consume_while(func);
+}
+
+std::vector<SimpleSelector> CSSParser::parse_selectors() {
+	std::vector<SimpleSelector> selectors;
+	while (true) {
+		selectors.push_back(parse_simple_selector());
+		consume_whitespace();
+		auto next_c = next_char();
+		if (next_c == ',') {
+			consume_char();
+			consume_whitespace();
+		} else if (next_c == '{') { // start of declarations
+			break;
+		} // omit error handling
+	}
+	std::sort(selectors.begin(), selectors.end(), [] (SimpleSelector& a, SimpleSelector& b) {
+		return a.calc_specificity() < b.calc_specificity();
+	});
+	return selectors;
 }
