@@ -61,3 +61,11 @@ TEST_CASE("Simple selector parsing", "[css_parser]") {
 		}
 	}
 }
+
+TEST_CASE("Parsing multiple selectors", "[css_parser]") {
+	SECTION("Parsing multiple selectors") {
+		CSSParser parser(0, "div#my-div1.class1 div#my-div2.class2 {}");
+		auto selectors = parser.parse_selectors();
+		REQUIRE(selectors.size() == 2);
+	}
+}

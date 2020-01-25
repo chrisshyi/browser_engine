@@ -6,7 +6,8 @@ bool valid_identifier_char(char);
 
 SimpleSelector CSSParser::parse_simple_selector() {
     SimpleSelector selector{std::nullopt, std::nullopt};
-    while (!eof()) {
+    bool selector_ended = false;
+    while (!eof() && !selector_ended) {
     	auto next_c = next_char();
         switch(next_c) {
             case '#': 
@@ -24,6 +25,7 @@ SimpleSelector CSSParser::parse_simple_selector() {
             	if (valid_identifier_char(next_c)) {
 					selector.set_tag_name(parse_identifier());
 				} else {
+					selector_ended = true;
 					break;
 				}
         }
@@ -40,10 +42,10 @@ std::string CSSParser::parse_identifier() {
 	return consume_while(func);
 }
 
-std::vector<SimpleSelector> CSSParser::parse_selectors() {
-	std::vector<SimpleSelector> selectors;
+std::vector<unique_ptr<Selector>> CSSParser::parse_selectors() {
+	std::vector<unique_ptr<Selector>> selectors;
 	while (true) {
-		selectors.push_back(parse_simple_selector());
+		selectors.push_back(std::make_unique<SimpleSelector>(parse_simple_selector()));
 		consume_whitespace();
 		auto next_c = next_char();
 		if (next_c == ',') {
@@ -53,8 +55,9 @@ std::vector<SimpleSelector> CSSParser::parse_selectors() {
 			break;
 		} // omit error handling
 	}
-	std::sort(selectors.begin(), selectors.end(), [] (SimpleSelector& a, SimpleSelector& b) {
-		return a.calc_specificity() < b.calc_specificity();
+	using Selector_ptr = unique_ptr<Selector>; 
+	std::sort(selectors.begin(), selectors.end(), [] (Selector_ptr& a, Selector_ptr& b) {
+		return a->calc_specificity() < b->calc_specificity();
 	});
 	return selectors;
 }
