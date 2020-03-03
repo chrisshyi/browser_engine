@@ -32,10 +32,11 @@ class SimpleSelector : public Selector {
 
         ~SimpleSelector() override = default;
 
+        SimpleSelector(SimpleSelector&) = default;
         SimpleSelector(SimpleSelector&&) = default;
 
         SimpleSelector& operator=(SimpleSelector&&) = default;
-        SimpleSelector(SimpleSelector&) = default;
+        SimpleSelector& operator=(SimpleSelector&) = default;
 
         void set_tag_name(string new_tag_name) {
         	tag_name = new_tag_name;
