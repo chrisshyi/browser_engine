@@ -3,10 +3,10 @@
 
 class Declaration {
     public:
+        enum class Unit {
+            px // Can add other units
+        };
         struct Length {
-            enum class Unit {
-                px // Can add other units
-            };
             double len;
             Unit unit;
         };
@@ -17,7 +17,6 @@ class Declaration {
             uint8_t a;
         };
         using Value = std::variant<std::string, Length, Color>;
-    private:
         std::string name;
         Value value;
 };

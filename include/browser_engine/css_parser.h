@@ -24,7 +24,7 @@ class CSSParser : public Parser {
         Declaration::Value parse_value();
         Declaration::Value parse_length();
         Declaration::Value parse_color();
-        float parse_float();
-        Declaration::Length::Unit parse_unit();
+        double parse_float();
+        Declaration::Unit parse_unit();
         uint8_t parse_hex_pair();
 };

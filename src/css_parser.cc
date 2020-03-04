@@ -1,6 +1,7 @@
 #include "../include/browser_engine/css_parser.h"
 #include <optional>
 #include <algorithm>
+#include <cassert>
 
 bool valid_identifier_char(char);
 
@@ -34,7 +35,7 @@ SimpleSelector CSSParser::parse_simple_selector() {
 }
 
 bool valid_identifier_char(char c) {
-	return isalpha(c) || (c == '-') || (c == '_') || isdigit(c);
+	return isalnum(c) || (c == '-') || (c == '_');
 }
 
 std::string CSSParser::parse_identifier() {
@@ -60,4 +61,47 @@ std::vector<unique_ptr<Selector>> CSSParser::parse_selectors() {
 		return a->calc_specificity() < b->calc_specificity();
 	});
 	return selectors;
+}
+
+Declaration CSSParser::parse_declaration() {
+    auto property_name = parse_identifier();
+    consume_whitespace();
+    assert(consume_char() == ':');
+    consume_whitespace();
+    auto val = parse_value();
+    consume_whitespace();
+    assert(consume_char() == ';');
+
+    return Declaration{property_name, val};
+}
+
+Declaration::Value CSSParser::parse_value() {
+    auto next_c = next_char();
+    if (isdigit(next_c)) {
+        return parse_length();
+    } else if (next_c == '#') {
+        return parse_color();
+    } else {
+        return parse_identifier();
+    }
+}
+
+Declaration::Value CSSParser::parse_length() {
+    Declaration::Value{Declaration::Length{parse_float(), parse_unit()}};
+}
+
+Declaration::Value CSSParser::parse_color() {
+    assert(consume_char() == '#');
+    auto r = parse_hex_pair();
+    auto g = parse_hex_pair();
+    auto b = parse_hex_pair();
+
+    Declaration::Value{Declaration::Color{r, g, b, 255}};
+}
+
+// parse two hexidecimal digits
+uint8_t CSSParser::parse_hex_pair() {
+    auto hex_substr = input.substr(pos, 2);
+    pos += 2;
+    return (uint8_t) std::stoi(hex_substr, nullptr, 16);
 }
