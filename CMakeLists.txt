@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 include(CMakePrintHelpers)
+include_directories(/usr/lib/llvm-9/include/c++/v1)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_COMPILER clang++-9)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -g")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -O0 -glldb -ggdb3")

@@ -8,8 +8,12 @@ using std::unique_ptr;
 
 class CSSParser : public Parser {
     private:
-        size_t pos;
-        std::string input;
+        double parse_float();
+        uint8_t parse_hex_pair();
+        Declaration::Value parse_value();
+        Declaration::Value parse_length();
+        Declaration::Value parse_color();
+        Declaration::Unit parse_unit();
     public:
         CSSParser(size_t pos, std::string input) : Parser{pos, input} {};
         std::string parse_identifier();
@@ -21,10 +25,4 @@ class CSSParser : public Parser {
         std::vector<Declaration> parse_declarations();
         Rule parse_rule();
         std::vector<Rule> parse_rules();
-        Declaration::Value parse_value();
-        Declaration::Value parse_length();
-        Declaration::Value parse_color();
-        double parse_float();
-        Declaration::Unit parse_unit();
-        uint8_t parse_hex_pair();
 };
