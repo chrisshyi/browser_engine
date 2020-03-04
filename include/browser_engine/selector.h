@@ -10,13 +10,9 @@ using std::tuple;
 class Selector {
     public:
         using Specificity = tuple<size_t, size_t, size_t>;
-        Selector() = default;
+
         virtual ~Selector() = default;
         virtual Specificity calc_specificity() = 0;
-        Selector(Selector&&) = default;
-        Selector(Selector&) = default;
-        Selector& operator=(Selector&&) = default;
-
 };
 
 class SimpleSelector : public Selector {
@@ -29,14 +25,6 @@ class SimpleSelector : public Selector {
     public:
         SimpleSelector(optional<string> tag, optional<string> id) :
         tag_name{tag}, id{id}, class_names{} {};
-
-        ~SimpleSelector() override = default;
-
-        SimpleSelector(SimpleSelector&) = default;
-        SimpleSelector(SimpleSelector&&) = default;
-
-        SimpleSelector& operator=(SimpleSelector&&) = default;
-        SimpleSelector& operator=(SimpleSelector&) = default;
 
         void set_tag_name(string new_tag_name) {
         	tag_name = new_tag_name;
