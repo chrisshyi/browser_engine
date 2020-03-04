@@ -87,7 +87,21 @@ Declaration::Value CSSParser::parse_value() {
 }
 
 Declaration::Value CSSParser::parse_length() {
-    Declaration::Value{Declaration::Length{parse_float(), parse_unit()}};
+    return Declaration::Value{Declaration::Length{parse_float(), parse_unit()}};
+}
+
+double CSSParser::parse_float() {
+    std::function<bool(char)> digit_or_dot = [](char c) { 
+        return isdigit(c) || c == '.';
+    };
+    auto float_str = consume_while(digit_or_dot);
+    return std::stod(float_str, nullptr);
+}
+
+Declaration::Unit CSSParser::parse_unit() {
+    auto unit_str = parse_identifier();
+    assert(unit_str == "px");
+    return Declaration::Unit::px;
 }
 
 Declaration::Value CSSParser::parse_color() {
@@ -96,7 +110,7 @@ Declaration::Value CSSParser::parse_color() {
     auto g = parse_hex_pair();
     auto b = parse_hex_pair();
 
-    Declaration::Value{Declaration::Color{r, g, b, 255}};
+    return Declaration::Value{Declaration::Color{r, g, b, 255}};
 }
 
 // parse two hexidecimal digits
