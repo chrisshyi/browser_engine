@@ -2,9 +2,8 @@
 .vscode/*
 build/*
 *kdev4*
-cmake-build-debug/*
 .idea/*
-debug/*
+debug-build/*
 .cproject
 .project
 CMakeLists.txt.user

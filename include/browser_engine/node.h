@@ -13,7 +13,7 @@ class Node {
     private:
         vector<Node> children;        
         NodeType node_type;
-        std::variant<string, ElementData>node_data;
+        std::variant<string, ElementData> node_data;
     public:
         Node(string);
         Node(string, AttrMap, vector<Node>);
